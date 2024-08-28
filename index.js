@@ -9,6 +9,7 @@ const connectDB = require('./database/db');
 const users = require("./routes/users");
 const homeSection = require("./routes/homeSection");
 const blogsRouter = require("./routes/blogs");
+const AssessmentSection = require("./routes/AssessmentSection");
 
 
 app.use(cors());
@@ -16,6 +17,7 @@ app.use(express.json());
 
 app.use('/api/users',users)
 app.use('/api/homeSection',homeSection)
+app.use('/api/AssessmentSection',AssessmentSection)
 app.use('/api/blogs',blogsRouter)
 
 
