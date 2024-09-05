@@ -1,72 +1,76 @@
-const assessmentSection ={
-    "_id": "66cece0f7b881e3dbf8b05c0",
-    "section1": {
-        "header": "Take a Self-Assessment",
-        "para1": "<p class='text-sm text-center mb-5'>Welcome to our self-assessment page. Here, you can choose from a variety of tests to help you understand your mental health better.</p><p class='text-sm text-center'>Select the test that best matches your current feelings and concerns.</p>",
-        "AvailableTest": [
+
+const assesmentPageSection = {
+    section1: {
+        header: "Take a Self-Assessment",
+        para1: `<p class='text-sm text-center mb-5'>
+                           RCI Certified Clinicians provide various tests and Assessments
+                        </p>
+    
+                        <p class='text-sm text-center'>If you are looking for an psychological assessment reach out to your nearest clinic.
+                         </p>`,
+        AvailableTest: [
             {
-                "id": 1,
-                "title": "Take the PHQ-9 Test",
-                "title2": "Test for Depression",
-                "para": "This test helps evaluate the severity of depression symptoms.",
-                "img": "/home/depression.svg",
-                "link": "/assesment/phq9/selfAssesment"
+                id: 1,
+                title: "Take the PHQ-9 Test",
+                title2: "Test for Depression",
+                para: `This test helps evaluate the severity of depression symptoms.`,
+                img: '/home/positive2.svg',
+                link: '/assesment/phq9/selfAssesment'
             },
             {
-                "id": 2,
-                "title": "Take the GAD-7 Test",
-                "title2": "Test for Anxiety",
-                "para": "This test helps evaluate the severity of anxiety symptoms.",
-                "img": "/home/anxiety.svg",
-                "link": "/assesment/gad7/selfAssesment"
+                id: 2,
+                title: "Take the GAD-7 Test",
+                title2: "Test for Anxiety",
+                para: `This test helps evaluate the severity of anxiety symptoms.`,
+                img: '/home/positive3.svg',
+                link: '/assesment/gad7/selfAssesment'
             },
             {
-                "id": 3,
-                "title": "Take the PSS-10 Test",
-                "title2": "Test for Stress",
-                "para": "This test assesses how stressful you find your life situations.",
-                "img": "/home/stress.svg",
-                "link": "/assesment/pss10/selfAssesment"
-            }
-        ]
-    },
-    "section2": {
-        "header": "Not sure which test to take?",
-        "para": "<p class='text-center text-sm'>The K10 is designed to measure general psychological distress and can be an effective initial screening tool to identify whether you may need further assessment or support.  </p>",
-        "defaultTest": {
-            "id": 4,
-            "title": "Take the K10 Test",
-            "title2": "K10 (Kessler Psychological Distress Scale)",
-            "para": "This test assesses the level of distress you have experienced in the past month. It helps identify symptoms of anxiety and depression, emotional and physical fatigue, and the impact on daily functioning.",
-            "img": "/home/anxiety.svg"
-        }
-    },
-    "section3": {
-        "blogs": [
-            {
-                "id": 1,
-                "img": "",
-                "title": "TMS for Depression"
+                id: 3,
+                title: "Take the PSS-10 Test",
+                title2: "Test for Stress",
+                para: `This test assesses how stressful you find your life situations.`,
+                img: '/home/positive4.svg',
+                link: '/assesment/pss10/selfAssesment'
             },
-            {
-                "id": 2,
-                "img": "",
-                "title": "TMS for OCD"
-            },
-            {
-                "id": 3,
-                "img": "",
-                "title": "TMS for Anxiety"
-            }
+
         ],
-        "button": {
-            "text": "Learn More",
-            "link": "/"
-        }
+
     },
-    "createdAt": "2024-08-28T07:13:19.159Z",
-    "updatedAt": "2024-08-28T07:13:19.159Z",
-    "__v": 0
+    section2: {
+        header: "Not sure which test to take?",
+        para: `<p class='text-center text-sm'>The K10 is designed to measure general psychological distress and can be an effective initial screening tool to identify whether you may need further assessment or support.  </p>`,
+        defaultTest: {
+            id: 4,
+            title: "Take the K10 Test",
+            title2: "K10 (Kessler Psychological Distress Scale)",
+            para: `This test assesses the level of distress you have experienced in the past month. It helps identify symptoms of anxiety and depression, emotional and physical fatigue, and the impact on daily functioning. `,
+            img: '/home/positive1.svg',
+        },
+    },
+    section3: {
+        blogs: [
+            {
+                id: 1,
+                img: "dep1.svg",
+                title: "TMS for Depression"
+            },
+            {
+                id: 2,
+                img: "",
+                title: "TMS for OCD"
+            },
+            {
+                id: 3,
+                img: "",
+                title: "TMS for Anxiety"
+            },
+        ],
+        button: {
+            text: "Learn More",
+            link: "/",
+        }
+    }
 }
 
 
@@ -86,8 +90,8 @@ With empathy and confidence, our professionals will guide you through every chal
         para2: `These tests can help identify
 what you may have and need`,
         para2: `Take a FREE TEST to identify your symptoms`,
-        html1: `<p class='text-center mb-5 font-[15px] text-[#3A3A3A]'>These tests can help identify
-                        what you may have and need</p>
+        html1: `
+        
 
                     <h1 class='text-2xl text-center text-gray-800'>
                         Take a <span class="font-semibold">FREE TEST</span> to identify your symptoms
@@ -112,7 +116,7 @@ what you may have and need`,
         <p style="font-size: 15px; color: #3A3A3A; text-align: center">Is TMS for me? Learn how it works and if it is the right option for you. </p>`,
         button: {
             text: "MORE ABOUT TMS",
-            link: "/blog/tms",
+            link: "/pages/tmsPage",
         }
 
     },
@@ -146,46 +150,29 @@ what you may have and need`,
         header: 'Services we offer',
         services: [
             {
-                title: 'Psychology/Therapy',
                 array: [
                     {
                         img: "",
-                        name: 'Lorem Ipsum dolor qioe',
+                        name: 'Therapy (Psychology)',
                     },
                     {
                         img: "",
-                        name: 'Lorem Ipsum dolor qioe',
+                        name: 'Psychiatry ',
                     },
                     {
                         img: "",
-                        name: 'Lorem Ipsum dolor qioe',
+                        name: 'Assessments',
+                    },
+                    {
+                        img: "",
+                        name: 'TMS',
                     },
                 ],
                 button: {
                     text: 'LEARN MORE',
                     link: '/services/Therapy Services'
                 }
-            }, {
-                title: 'Psychiatry',
-                array: [
-                    {
-                        img: "",
-                        name: 'Lorem Ipsum dolor qioe',
-                    },
-                    {
-                        img: "",
-                        name: 'Lorem Ipsum dolor qioe',
-                    },
-                    {
-                        img: "",
-                        name: 'Lorem Ipsum dolor qioe',
-                    },
-                ],
-                button: {
-                    text: 'LEARN MORE',
-                    link: '/services/TMS Treatment Services'
-                }
-            }
+            },
         ]
     },
     section6: {
@@ -262,52 +249,61 @@ what you may have and need`,
 }
 
 
-const blog ={
+
+const blog = {
     "title": "A Journey Through the Mountains",
     "mainImage": "https://picsum.photos/200/300",
     "sections": [
-      {
-        "type": "content",
-        "content": "<p>This is the first paragraph describing the journey.</p>",
-        "order": 1
-      },
-      {
-        "type": "image",
-        "content": "https://picsum.photos/200/300",
-        "order": 2
-      },
-      {
-        "type": "content",
-        "content": "<p>This section provides more details about the mountain ranges.</p>",
-        "order": 3
-      },
-      {
-        "type": "button",
-        "text": "Read More",
-        "link": "/",
-        "order": 3
-      },
-      {
-        "type":"accordion",
-        "order":4,
-        "sections": [
-            {
-              "type": "content",
-              "content": "<p>Details about the first part of the journey inside the accordion.</p>",
-              "order": 1
-            },
-            {
-              "type": "image",
-              "content": "https://picsum.photos/200/300",
-              "order": 2
-            },
-            {
-              "type": "content",
-              "content": "<p>Additional information inside the accordion section.</p>",
-              "order": 3
-            }
-          ],
-      }
-     
+        {
+            "type": "content",
+            "content": "<p>This is the first paragraph describing the journey.</p>",
+            "order": 1
+        },
+        {
+            "type": "image",
+            "content": "https://picsum.photos/200/300",
+            "order": 2
+        },
+        {
+            "type": "content",
+            "content": "<p>This section provides more details about the mountain ranges.</p>",
+            "order": 3
+        },
+        {
+            "type": "button",
+            "text": "Read More",
+            "link": "/",
+            "order": 3
+        },
+        {
+            "type": "accordion",
+            "order": 4,
+            "sections": [
+                {
+                    "type": "content",
+                    "content": "<p>Details about the first part of the journey inside the accordion.</p>",
+                    "order": 1
+                },
+                {
+                    "type": "image",
+                    "content": "https://picsum.photos/200/300",
+                    "order": 2
+                },
+                {
+                    "type": "content",
+                    "content": "<p>Additional information inside the accordion section.</p>",
+                    "order": 3
+                }
+            ],
+        }
+
     ]
-  }
+}
+
+
+module.exports = { 
+    HomePageSections, 
+    assesmentPageSection, 
+    blog ,
+    
+}

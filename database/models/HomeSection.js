@@ -23,6 +23,15 @@ const HomeSectionSchema = new mongoose.Schema({
   section7: {
     type:mongoose.Schema.Types.Mixed,
   },
+  section8: {
+    type:mongoose.Schema.Types.Mixed,
+  },
+  section9: {
+    type:mongoose.Schema.Types.Mixed,
+  },
+  section10: {
+    type:mongoose.Schema.Types.Mixed,
+  },
 
   
   
