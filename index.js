@@ -13,7 +13,7 @@ const AssessmentSection = require("./routes/AssessmentSection");
 const uploads = require("./routes/uploads");
 const clinicRouter = require("./routes/clinicLocation");
 const doctorsRouter = require("./routes/doctors");
-
+const testimonialsRouter = require("./routes/testimonials");
 app.use(cors());
 app.use(express.json());
 
@@ -24,6 +24,7 @@ app.use('/api/blogs',blogsRouter)
 app.use('/api/uploads',uploads)
 app.use('/api/clinicLocation',clinicRouter)
 app.use('/api/doctors',doctorsRouter)
+app.use('/api/testimonials',testimonialsRouter)
 
 
 app.get("/", (req, res) => {
