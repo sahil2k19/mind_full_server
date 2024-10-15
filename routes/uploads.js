@@ -16,5 +16,15 @@ uploads.post('/file', upload.single('image'), async (req, res) => {
     }
   })
 
+  uploads.post('/video', upload.single('video'), async (req, res) => {
+
+    try {
+      const imageUrl = req.file.location
+      res.json({ result: imageUrl, message: "image uploaded successfully" })
+    } catch (err) {
+      res.json(err)
+    }
+  })
+
 
 module.exports = uploads
