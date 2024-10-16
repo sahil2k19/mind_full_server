@@ -1,5 +1,5 @@
 const express = require("express");
-const Testimonial = require("../database/models/TestimonialSchema");
+const Testimonial = require("../database/models/TestimonialSchema.js");
 const Doctor = require("../database/models/DoctorSchema");
 
 
