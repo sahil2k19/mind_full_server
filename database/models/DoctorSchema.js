@@ -15,53 +15,46 @@ const DoctorSchema = new mongoose.Schema({
   },
   about: {
     type: String,
-   
   },
   profession_background: {
     type: mongoose.Schema.Types.Mixed,
-   
   },
   language_spoken: {
-  type: mongoose.Schema.Types.Mixed, 
-   
+    type: mongoose.Schema.Types.Mixed,
   },
   specialization: {
-  type: mongoose.Schema.Types.Mixed, 
-   
+    type: mongoose.Schema.Types.Mixed,
   },
   experience: {
-    type: Number, 
-   
+    type: Number,
   },
   image: {
-    type: String, 
-   
+    type: String,
   },
   address: {
     type: String,
-   
   },
   phone: {
-    type: String, 
-   
+    type: String,
   },
   email: {
     type: String,
-   
   },
   website: {
     type: String,
   },
   availability: {
-    type: mongoose.Schema.Types.Mixed, 
-   
+    type: mongoose.Schema.Types.Mixed,
   },
   description: {
-    type: String, 
-   
+    type: String,
+  },
+  order: {
+    type: Number,
+    required: true,
+    default: 0,  // Default order
   }
-},
-  { timestamps: true });
+}, { timestamps: true });
 
 const Doctor = mongoose.model('Doctor', DoctorSchema);
 
