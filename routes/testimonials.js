@@ -1,9 +1,108 @@
-const express = require("express");
-const Testimonial = require("../database/models/TestimonialSchema.js");
-const Doctor = require("../database/models/DoctorSchema");
-
-
+const express = require('express');
+const multer = require('multer');
+const csvParser = require('csv-parser');
+const xlsx = require('xlsx');
+const fs = require('fs');
+const path = require('path');
+const Testimonial = require('../database/models/TestimonialSchema');
+const Doctor = require('../database/models/DoctorSchema');
 const router = express.Router();
+
+// bulk upload 
+
+// Multer setup for file uploads
+const upload = multer({ dest: 'uploads/' });
+
+// Helper function to handle CSV or Excel file parsing
+const parseFile = (filePath, fileType) => {
+    return new Promise((resolve, reject) => {
+        const testimonials = [];
+
+        if (fileType === 'csv') {
+            fs.createReadStream(filePath)
+                .pipe(csvParser())
+                .on('data', (row) => {
+                    testimonials.push(row);
+                })
+                .on('end', () => {
+                    resolve(testimonials);
+                })
+                .on('error', (error) => {
+                    reject(error);
+                });
+        } else if (fileType === 'xlsx') {
+            const workbook = xlsx.readFile(filePath);
+            const sheetName = workbook.SheetNames[0];
+            const sheet = workbook.Sheets[sheetName];
+            const data = xlsx.utils.sheet_to_json(sheet);
+            resolve(data);
+        } else {
+            reject(new Error('Unsupported file type'));
+        }
+    });
+};
+
+// Bulk upload route
+router.post('/bulk-upload', upload.single('file'), async (req, res) => {
+    const file = req.file;
+
+    if (!file) {
+        return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const ext = path.extname(file.originalname).toLowerCase();
+    const fileType = ext === '.csv' ? 'csv' : ext === '.xlsx' ? 'xlsx' : null;
+
+    if (!fileType) {
+        return res.status(400).json({ message: 'Unsupported file format. Please upload a CSV or Excel file.' });
+    }
+
+    try {
+        // Parse the uploaded file
+        const testimonialsData = await parseFile(file.path, fileType);
+      console.log('testimonialsData',testimonialsData)
+        // Iterate through the parsed data and create testimonials
+        const testimonialsToInsert = [];
+
+        for (const row of testimonialsData) {
+            // Find the doctor by name (assuming you have unique doctor names)
+            const doctor = await Doctor.findOne({ name: row['Doctor Name'].trim()});
+
+            if (doctor) {
+                // Create testimonial object from the row data
+                const testimonial = {
+                    patientName: row['Patient Name'],
+                    condition: row['Condition'],
+                    treatment: row['Treatment'],
+                    title: row['Title'],
+                    fullTestimonial: row['Full Text'],
+                    videoUrl: row['Video Link'],
+                    doctor: doctor._id, // Assign the doctor ID
+                    location: row['Location'],
+                    shortQuote: row['Title'] // Assuming the short quote is the same as the title
+                };
+                testimonialsToInsert.push(testimonial);
+            }
+        }
+        console.log(testimonialsToInsert);
+        // Bulk insert the testimonials
+        if (testimonialsToInsert.length > 0) {
+            await Testimonial.insertMany(testimonialsToInsert);
+            res.status(201).json({ message: `${testimonialsToInsert.length} testimonials uploaded successfully` });
+        } else {
+            res.status(400).json({ message: 'No valid testimonials to upload' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    } finally {
+        // Remove the uploaded file after processing
+        fs.unlinkSync(file.path);
+    }
+});
+
+
+
+
 router.get('/doctor', async (req, res) => {
     try {
       const doctor = await Doctor.find({}, { name: 1 });
