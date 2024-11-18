@@ -128,5 +128,29 @@ router.post('/move-down/:id', async (req, res) => {
   }
 });
 
+router.get('/search/doctors', async (req, res) => {
+  try {
+    const location = decodeURIComponent(req.query.location || '');
+    const specialization = decodeURIComponent(req.query.specialization || '');
+
+    // Build the query object based on the provided query parameters
+    const query = {};
+
+    if (location) {
+      query.location = location;
+    }
+
+    if (specialization) {
+      query.specialization = { $in: [specialization] }; // Check if the specialization exists in the array
+    }
+
+    const doctors = await Doctor.find(query).sort({ order: 1 }); // Fetch and sort by order
+    res.status(200).json(doctors);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 
 module.exports = router
