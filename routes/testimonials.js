@@ -101,17 +101,24 @@ router.post('/bulk-upload', upload.single('file'), async (req, res) => {
 
 router.get('/search/testimonials', async (req, res) => {
   try {
-      // Extract query parameters
-      // Decode URI components to handle special characters
-const condition = req.query.condition ? decodeURIComponent(req.query.condition) : undefined;
-const treatment = req.query.treatment ? decodeURIComponent(req.query.treatment) : undefined;
-const location = req.query.location ? decodeURIComponent(req.query.location) : undefined;
+      // Extract query parameters and decode URI components
+      const condition = req.query.condition ? decodeURIComponent(req.query.condition).trim() : undefined;
+      const treatment = req.query.treatment ? decodeURIComponent(req.query.treatment).trim() : undefined;
+      let location = req.query.location ? decodeURIComponent(req.query.location).trim() : undefined;
+
+      // Normalize spaces in the location
+      if (location) {
+          location = location.replace(/\s+/g, ' '); // Replace multiple spaces with a single space
+      }
 
       // Build the query object dynamically with case-insensitive and partial match
       const query = {};
-      if (condition) query.condition = { $regex: condition, $options: 'i' }; // Case-insensitive partial match
-      if (treatment) query.treatment = { $regex: treatment, $options: 'i' }; // Case-insensitive partial match
-      if (location) query.location = { $regex: location, $options: 'i' }; // Case-insensitive partial match
+      if (condition) query.condition = { $regex: condition, $options: 'i' };
+      if (treatment) query.treatment = { $regex: treatment, $options: 'i' };
+      if (location) query.location = { $regex: location, $options: 'i' };
+
+      console.log('Location:', location);
+      console.log('Query:', query);
 
       // Fetch testimonials matching the query
       const testimonials = await Testimonial.find(query).populate('doctor', 'name');
@@ -127,6 +134,7 @@ const location = req.query.location ? decodeURIComponent(req.query.location) : u
       res.status(500).json({ message: error.message });
   }
 });
+
 
 
 
