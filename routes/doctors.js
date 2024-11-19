@@ -137,12 +137,14 @@ router.get('/search/doctors', async (req, res) => {
     const query = {};
 
     if (location) {
-      query.location = location;
+      if (specialization) query.specialization = { $regex: specialization, $options: 'i' };
+      if (location) query.location = { $regex: location, $options: 'i' };
+      // query.location = location;
     }
 
-    if (specialization) {
-      query.specialization = { $in: [specialization] }; // Check if the specialization exists in the array
-    }
+    // if (specialization) {
+    //   query.specialization = { $in: [specialization] }; // Check if the specialization exists in the array
+    // }
 
     const doctors = await Doctor.find(query).sort({ order: 1 }); // Fetch and sort by order
     res.status(200).json(doctors);
