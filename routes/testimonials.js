@@ -60,7 +60,6 @@ router.post('/bulk-upload', upload.single('file'), async (req, res) => {
     try {
         // Parse the uploaded file
         const testimonialsData = await parseFile(file.path, fileType);
-      console.log('testimonialsData',testimonialsData)
         // Iterate through the parsed data and create testimonials
         const testimonialsToInsert = [];
 
@@ -84,7 +83,6 @@ router.post('/bulk-upload', upload.single('file'), async (req, res) => {
                 testimonialsToInsert.push(testimonial);
             }
         }
-        console.log(testimonialsToInsert);
         // Bulk insert the testimonials
         if (testimonialsToInsert.length > 0) {
             await Testimonial.insertMany(testimonialsToInsert);
@@ -98,6 +96,36 @@ router.post('/bulk-upload', upload.single('file'), async (req, res) => {
         // Remove the uploaded file after processing
         fs.unlinkSync(file.path);
     }
+});
+
+
+router.get('/search/testimonials', async (req, res) => {
+  try {
+      // Extract query parameters
+      // Decode URI components to handle special characters
+const condition = req.query.condition ? decodeURIComponent(req.query.condition) : undefined;
+const treatment = req.query.treatment ? decodeURIComponent(req.query.treatment) : undefined;
+const location = req.query.location ? decodeURIComponent(req.query.location) : undefined;
+
+      // Build the query object dynamically with case-insensitive and partial match
+      const query = {};
+      if (condition) query.condition = { $regex: condition, $options: 'i' }; // Case-insensitive partial match
+      if (treatment) query.treatment = { $regex: treatment, $options: 'i' }; // Case-insensitive partial match
+      if (location) query.location = { $regex: location, $options: 'i' }; // Case-insensitive partial match
+
+      // Fetch testimonials matching the query
+      const testimonials = await Testimonial.find(query).populate('doctor', 'name');
+
+      // Check if testimonials exist
+      if (!testimonials || testimonials.length === 0) {
+          return res.status(404).json({ message: 'No testimonials found matching the criteria' });
+      }
+
+      // Respond with testimonials
+      res.json(testimonials);
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
 });
 
 
